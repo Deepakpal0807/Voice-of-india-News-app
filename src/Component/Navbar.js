@@ -67,7 +67,18 @@ const Navbar =(props)=>{
                 </li>
             
                
-                
+                <li class="nav-item dropdown bg-dark">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            India
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><button /*onClick={props.updateCountry('us')}*/ class="dropdown-item" href="#">America</button></li>
+            <li><a class="dropdown-item" href="#">Australia</a></li>
+            <li><a class="dropdown-item" href="#">Canada</a></li>
+          
+          </ul>
+        </li>
+
       
        
               </ul>

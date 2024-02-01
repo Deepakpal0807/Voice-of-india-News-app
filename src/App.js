@@ -26,9 +26,9 @@ const updateprogress=(progress)=>{
   setprogress(progress);
 }
 
-  // const updateCountry = (newCountry) => {
-  //   setCountry(newCountry);
-  // };
+  const updateCountry = (newCountry) => {
+    setCountry(newCountry);
+  };
 
   
     return (
@@ -47,18 +47,18 @@ const updateprogress=(progress)=>{
         <Route
             exact
             path="/"
-            element={<News setprogress={updateprogress} key="general" country={country}  pageSize={9} category="general" sub="General" />}
+            element={<News setprogress={updateprogress} key="general" country={country}  pageSize={9}  updateCountry={updateCountry}category="general" sub="General" />}
           />
-        {/* <Route exact path="/" element={ <News   setprogress={updateprogress}  key="general" country={country} updatecountry={updateCountry} pageSize={9} category="general" sub="General"/>}/> */}
+        {/* <Route exact path="/" element={ <News   setprogress={updateprogress}  key="general" country={country} updatecountry={updateCountry} pageSize={9}  updateCountry={updateCountry}category="general" sub="General"/>}/> */}
         
-        <Route exact path="/business" element={ <News   setprogress={ updateprogress}  key="business" country={country}  pageSize={9} category="business" sub="Business"/>}/>
+        <Route exact path="/business" element={ <News   setprogress={ updateprogress}  key="business" country={country}  pageSize={9}  updateCountry={updateCountry}category="business" sub="Business"/>}/>
 
-        <Route exact path="/entertainment" element={ <News   setprogress={ updateprogress}key="entertainment" country={country}  pageSize={9} category="entertainment" sub="Entertainment"/>}/>
-        <Route exact path="/health" element={ <News   setprogress={ updateprogress}  key="health" country={country} pageSize={9} category="health" sub="Health"/>}/>
+        <Route exact path="/entertainment" element={ <News   setprogress={ updateprogress}key="entertainment" country={country}  pageSize={9}  updateCountry={updateCountry}category="entertainment" sub="Entertainment"/>}/>
+        <Route exact path="/health" element={ <News   setprogress={ updateprogress}  key="health" country={country} pageSize={9}  updateCountry={updateCountry}category="health" sub="Health"/>}/>
         
-        <Route exact path="/science" element={ <News   setprogress={ updateprogress} key="science" country={country} pageSize={9} category="science" sub="Science"/>}/>
-        <Route exact path="/sports" element={ <News   setprogress={ updateprogress}  key="sports" country={country} pageSize={9} category="sports"sub="Sports"/>} />
-        <Route exact path="/technology" element={ <News   setprogress={ updateprogress} key="technology" country={country}  pageSize={9} category="technology"  sub="Technology"/>}/>
+        <Route exact path="/science" element={ <News   setprogress={ updateprogress} key="science" country={country} pageSize={9}  updateCountry={updateCountry}category="science" sub="Science"/>}/>
+        <Route exact path="/sports" element={ <News   setprogress={ updateprogress}  key="sports" country={country} pageSize={9}  updateCountry={updateCountry}category="sports"sub="Sports"/>} />
+        <Route exact path="/technology" element={ <News   setprogress={ updateprogress} key="technology" country={country}  pageSize={9}  updateCountry={updateCountry}category="technology"  sub="Technology"/>}/>
         
       
       </Routes>
