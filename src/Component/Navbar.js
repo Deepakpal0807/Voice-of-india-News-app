@@ -1,18 +1,15 @@
-import React, { Component } from "react";
+import React from "react";
 import logo from "./Voice-of-India-logo.png"
 import { Link } from "react-router-dom";
 import PropTypes from 'prop-types'
 
 
 
-export class Navbar extends Component {
-   
-
-  render() {
+const Navbar =(props)=>{
 
     return (
       <div>
-        <nav className="navbar navbar-expand-lg bg-dark navbar-dark">
+        <nav className="navbar navbar-expand-lg bg-dark navbar-dark fixed-top">
           <div className="container-fluid">
             <Link className="navbar-brand" to="#">
             <img src={logo} alt=""  height={'25px'} width={'150px'}/>
@@ -68,6 +65,7 @@ export class Navbar extends Component {
                     Technology
                   </Link>
                 </li>
+            
                
                 
       
@@ -91,6 +89,6 @@ export class Navbar extends Component {
       </div>
     );
   }
-}
+
 export default Navbar;
 

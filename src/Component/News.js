@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useEffect, useState } from 'react'
 import Newsitem from './Newsitem.js'
 import Spinner from './Spinner.js';
 import PropTypes from 'prop-types'
@@ -7,105 +7,76 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 
 
- class News extends Component {
-  static defaultProps = {
-    country: 'in',
-    pageSize:9,
-    sub:'general',
-    category : 'general'
-  }
- static propTypes={
-    country: PropTypes.string,
-    pageSize: PropTypes.number,
-    sub: PropTypes.string,
-    category: PropTypes.string,
-  }
+ const News =(props)=>{
+ 
 
   
-  constructor(props){
-    super(props);
+    let [page,setpage]=useState(1);
+    let [articles,setarticles]=useState([]);
+    let [loading,setloading]=useState(false);
+    let [totalresult,settotalresult]=useState(0);
     
-    this.state={
-      page:1,
-      articles:[],
-      loading:false,
-      totalresult:10
-      
-    }
-    document.title=` Voice-of-India : ${this.props.sub}`;
-    this.fetchdata = this.fetchdata.bind(this);
-  }
+    
+    document.title=` Voice-of-India : ${props.sub}`;
+    
+  
 
-  async fetchdata(){
-    this.props.setprogress(25);
-    let url=`https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=bdc2cbe0a1f349209cdbae080b833618&page=${this.state.page}&pageSize=${this.props.pageSize}`;
-    this.setState({
-      loading:true
-    })
+  const fetchdata=async ()=>{
+   props.setprogress(25);
+    let url=`https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=bdc2cbe0a1f349209cdbae080b833618&page=${page}&pageSize=${props.pageSize}`;
+    setloading(true);
     let data= await fetch(url);
-    this.props.setprogress(50);
+    props.setprogress(50);
     let parsedata= await data.json();
-    this.props.setprogress(75);
+    props.setprogress(75);
     // console.log(parsedata);
     if(parsedata.status==429){
       console.log(parsedata.message);
       console.log("limit exed");
     }
-    this.props.setprogress(100);
-    this.setState({
-      articles:parsedata.articles,
-      totalresult:parsedata.totalResults,
-       loading:false
-    })
+   props.setprogress(100);
+   setarticles(parsedata.articles);
+   settotalresult(parsedata.totalResults);
+   setloading(false);
+    
   }
- 
-  async componentDidMount(){
-        this.fetchdata();
-        // console.log(parsedata.totalResults);
-        
-      }
-       prev=async ()=>{
-        this.setState({
-          page:this.state.page-1
-        })
-        this.fetchdata();
-       
-       }
-       next=async ()=>{
-       this.setState({
-        page:this.state.page +1
-       })
-       this.fetchdata();
-
-        
-      }
-      fetchMoreData = async () => {
-        this.props.setprogress(10);
-       this.setState({page:this.state.page+1});
-       let url=`https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=bdc2cbe0a1f349209cdbae080b833618&page=${this.state.page}&pageSize=${this.props.pageSize}`;
-       this.setState({
-        //  loading:true
-       })
+  useEffect(() => {
+    // Update the document title using the browser API
+    fetchdata();
+  }, []);
+  
+  const prev = async () => {
+    setpage(page - 1);
+    await fetchdata();
+  };
+  
+  const next = async () => {
+    setpage(page + 1);
+    await fetchdata();
+  };
+     const fetchMoreData = async () => {
+        props.setprogress(10);
+        let url=`https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=bdc2cbe0a1f349209cdbae080b833618&page=${page+1}&pageSize=${props.pageSize}`;
+        setloading(true)
+        setpage(page+1);
        let data= await fetch(url);
-       this.props.setprogress(35);
+       props.setprogress(35);
        let parsedata= await data.json();
-       this.props.setprogress(75);
+      props.setprogress(75);
        // console.log(parsedata);
        if(parsedata.status==429){
          console.log(parsedata.message);
          console.log("limit exed");
        }
-       this.props.setprogress(100);
+       props.setprogress(100);
+       setarticles(articles?.concat(parsedata.articles));
+       settotalresult(parsedata.totalResults);
+       setloading(false);
        
-       this.setState(prevState => ({
-        articles: prevState.articles?.concat(parsedata.articles),
-        totalresult: parsedata.totalResults,
-        // loading: false
-      }))
       };
      
    
-      render() {
+     
         
         return (
           <div className="container my-6">
@@ -113,24 +84,20 @@ import InfiniteScroll from "react-infinite-scroll-component";
             
          
 
-        <div className="heading d-flex justify-content-between"><h1>Voice-of-India  - Top {<b>   {this.props.sub}     </b>} Headlines.</h1>
-        {/* <h3>Page : {this.state.page} / {Math.ceil(this.state.totalresult/this.props.pageSize)}</h3>*/}
-        </div> 
+            <div className="heading d-flex justify-content-between" style={{ marginTop: "4.5rem", marginBottom: "-1.5rem" }}>
+  <h1>Voice-of-India  - Top {<b>   {props.sub}     </b>} Headlines.</h1>
+</div>
     
         <InfiniteScroll
-  dataLength={this.state.articles?.length||0} // Use the length of articles array
-  next={this.fetchMoreData} // Use this.fetchdata instead of fetchData
-  hasMore={(this.state.articles?.length!==this.state.totalresult)}
-
-  loader={this.state.hasMore ? (
-    null
-  ) : <Spinner />}
-  
->
+        dataLength={articles?.length || 0}
+        next={fetchMoreData}
+        hasMore={articles.length < totalresult}
+        loader={<Spinner />}
+      >
                           
                      <div className="container"> <div className="row my-4">
                       {/* {this.state.loading && <Spinner/>} */}
-                            {this.state.articles && this.state.articles.map((element)=>{
+                            {articles && articles.map((element)=>{
                                 return <div className='col-md-4' key={element.url}>
                                   <Newsitem  title={element.title?element.title.slice(0,60):""}  description={element.description?element.description.slice(0,120):""} urlToImage={element.urlToImage?element.urlToImage:"https://michal.sapka.me/logos/right.png"} url={element.url}  time={element.publishedAt} author={element.author} source={element.source.name}/>
 
@@ -152,6 +119,18 @@ import InfiniteScroll from "react-infinite-scroll-component";
       </div>
     )
   }
-}
+
 
 export default News
+News.defaultProps = {
+  country: 'in',
+  pageSize:9,
+  sub:'general',
+  category : 'general'
+}
+News.propTypes={
+  country: PropTypes.string,
+  pageSize: PropTypes.number,
+  sub: PropTypes.string,
+  category: PropTypes.string,
+}
