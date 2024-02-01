@@ -3,13 +3,13 @@ import PropTypes from 'prop-types'
 
 
 export class Newsitem extends Component {
-   f
+   
     render() {
       let {title,description,urlToImage,url,time,author,source}=this.props;
     return (
       <div className='my-3 ' >
         <div className="card" style={{width: "18rem"}}>
-        <span className="position-absolute top-10  translate-middle badge rounded-pill bg-danger" style={{left:'90%'}}>
+        <span className="position-absolute top-10  translate-middle badge rounded-pill bg-danger" style={{left:'85%'}}>
     {source}
   </span>
   <img src={urlToImage} className="card-img-top" alt="Image"/>

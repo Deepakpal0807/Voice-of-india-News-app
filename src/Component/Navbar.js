@@ -4,13 +4,15 @@ import { Link } from "react-router-dom";
 import PropTypes from 'prop-types'
 
 
+
 export class Navbar extends Component {
+   
 
   render() {
 
     return (
       <div>
-        <nav className="navbar navbar-expand-lg bg-light navbar-light">
+        <nav className="navbar navbar-expand-lg bg-dark navbar-dark">
           <div className="container-fluid">
             <Link className="navbar-brand" to="#">
             <img src={logo} alt=""  height={'25px'} width={'150px'}/>
@@ -45,11 +47,7 @@ export class Navbar extends Component {
                     Entertainment
                   </Link>
                 </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/general">
-                    General
-                  </Link>
-                </li>
+               
                 <li className="nav-item">
                   <Link className="nav-link" to="/health">
                     Health
@@ -71,10 +69,11 @@ export class Navbar extends Component {
                   </Link>
                 </li>
                
-                {/* <li className="nav-item">
-                <Link className="nav-link disabled" aria-disabled="true">Disabled</Link>
-                </li> */}
+                
+      
+       
               </ul>
+            
               <form className="d-flex" role="search">
                 <input
                   className="form-control me-2"
@@ -82,7 +81,7 @@ export class Navbar extends Component {
                   placeholder="Search"
                   aria-label="Search"
                 />
-                <button className="btn btn-outline-success" type="submit">
+                <button className="btn btn-outline-success"  type="submit">
                   Search
                 </button>
               </form>
@@ -93,5 +92,5 @@ export class Navbar extends Component {
     );
   }
 }
-
 export default Navbar;
+
